@@ -78,11 +78,3 @@ ScrollReveal().reveal(".home-content h1, .about-img img", { origin: "left" });
 ScrollReveal().reveal(".home-content h3, .home-content p, .about-content", {
   origin: "right",
 });
-
-const typed = new Typed('.multiple-text', {
-  strings: ['Sachin Jha', 'Web Developer', 'App Developer'],
-  typeSpeed: 100,
-  loop: true,
-  backSpeed: 100,
-  backDelay: 1000,
-})
