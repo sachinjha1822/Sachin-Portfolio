@@ -78,3 +78,8 @@ ScrollReveal().reveal(".home-content h1, .about-img img", { origin: "left" });
 ScrollReveal().reveal(".home-content h3, .home-content p, .about-content", {
   origin: "right",
 });
+document.addEventListener("contextmenu", function(event){
+  alert("Inspect Elements Not Allowed");
+  event.preventDefault();
+})
+
