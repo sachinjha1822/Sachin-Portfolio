@@ -634,12 +634,7 @@ span {
   .home .home-content {
     max-width: 50rem;
   }
-  .Resume img{
-    width: 100%;
-    margin-right: 65px;
-    height: 100px;
-    width: 100px;
-  }
+
 
   .home .profession-container .profession-box {
     right: -45rem;
