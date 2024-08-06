@@ -67,11 +67,7 @@ body {
   font-weight: 500;
   margin-right: 3.5rem;
 }
-.Resume img{
-  height: 200px;
-  width: 200px;
-  margin-left: 35px;
-}
+
 
 .header.sticky .navbar a {
   color: var(--text-color);
