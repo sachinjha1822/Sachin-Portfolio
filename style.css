@@ -686,12 +686,7 @@ span {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     display: none;
   }
-  .Resume img{
-    width: 100%;
-    margin-right: 65px;
-    height: 100px;
-    width: 100px;
-  }
+
 
   .navbar.active {
     display: block;
@@ -833,12 +828,6 @@ span {
     grid-template-columns: 1fr;
   }
 }
-.Resume img{
-    width: 100%;
-    margin-right: 65px;
-    height: 100px;
-    width: 100px;
-  }
 
 @media (max-width: 450px) {
   html {
@@ -848,12 +837,7 @@ span {
   #darkMode-icon {
     right: 6rem;
   }
-  .Resume img{
-    width: 100%;
-    margin-right: 65px;
-    height: 100px;
-    width: 100px;
-  }
+
 
   .home {
     padding: 0 3% 30rem;
