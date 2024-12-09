@@ -348,4 +348,15 @@
 
     <script src="script.js"></script>
   </body>
+  <script>
+    document.addEventListener("copy", (event) => {
+        const selectData = window.getSelection().toString();
+        event.clipboardData.setData(
+          "text/plain",
+          "Copying the link? Click the button below to get the link.\n\n" +
+          window.location.href
+      );
+      event.preventDefault();
+    });
+  </script>
 </html>
