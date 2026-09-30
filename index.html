@@ -1797,6 +1797,215 @@
       text-decoration: none;
     }
 
+    /* Live Project Preview (in-page browser) */
+    .preview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 2rem;
+    }
+
+    .preview-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .preview-window {
+      width: 100%;
+      max-width: 1100px;
+      height: 85vh;
+      background-color: var(--bg-color);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .preview-modal.active .preview-window {
+      transform: scale(1);
+    }
+
+    .preview-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background-color: var(--dark-bg);
+      padding: 1.2rem 1.8rem;
+    }
+
+    .preview-dots {
+      display: flex;
+      gap: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .preview-dots span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #ff5f57;
+    }
+
+    .preview-dots span:nth-child(2) { background-color: #febc2e; }
+    .preview-dots span:nth-child(3) { background-color: #28c840; }
+
+    .preview-title {
+      flex: 1;
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .preview-open,
+    .preview-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+
+    .preview-open {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .preview-open:hover {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .preview-close {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .preview-close:hover {
+      background-color: #ff2d3d;
+      transform: scale(1.1);
+    }
+
+    .preview-url {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      font-size: 1.4rem;
+      padding: 0.9rem 1.8rem;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .preview-url span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .preview-url i {
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .preview-body {
+      position: relative;
+      flex: 1;
+      background-color: #fff;
+      min-height: 0;
+    }
+
+    .preview-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #fff;
+    }
+
+    .preview-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 1.5rem;
+    }
+
+    .preview-loader span {
+      width: 45px;
+      height: 45px;
+      border: 4px solid var(--border-color);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: preview-spin 0.8s linear infinite;
+    }
+
+    @keyframes preview-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .preview-foot {
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      font-size: 1.3rem;
+      text-align: center;
+      padding: 0.8rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .preview-foot a {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+      .preview-modal {
+        padding: 1rem;
+      }
+      .preview-window {
+        height: 88vh;
+      }
+      .preview-title {
+        font-size: 1.4rem;
+      }
+    }
+
     /* AI Assistant Styles */
     :root {
       --ai-primary: #ff4a57;
@@ -3057,6 +3266,26 @@
     </div> 
     </div> 
         
+    <!-- Live Project Preview (in-page browser) --> 
+    <div class="preview-modal" id="projectPreview" aria-hidden="true"> 
+      <div class="preview-window"> 
+        <div class="preview-bar"> 
+          <div class="preview-dots"><span></span><span></span><span></span></div> 
+          <div class="preview-title" id="previewTitle">Project Preview</div> 
+          <div class="preview-actions"> 
+            <a href="#" target="_blank" class="preview-open" id="previewOpen" title="Open in new tab"><i class="fas fa-external-link-alt"></i></a> 
+            <button class="preview-close" id="previewClose" title="Close"><i class="fas fa-times"></i></button> 
+          </div> 
+        </div> 
+        <div class="preview-url"><i class="fas fa-lock"></i><span id="previewUrl">...</span></div> 
+        <div class="preview-body"> 
+          <div class="preview-loader" id="previewLoader"><span></span><p>Loading live website...</p></div> 
+          <iframe id="previewFrame" title="Live project preview" loading="lazy"></iframe> 
+        </div> 
+        <div class="preview-foot">If the site does not load here, <a href="#" target="_blank" id="previewFallback">open it in a new tab</a></div> 
+      </div> 
+    </div> 
+
     <!-- Footer --> 
     <footer class="footer"> 
         <div class="container"> 
@@ -3575,6 +3804,70 @@
                 });
             });
         }
+
+        // Live Project Preview (in-page browser modal)
+        const previewModal = document.getElementById('projectPreview');
+        const previewFrame = document.getElementById('previewFrame');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewUrl = document.getElementById('previewUrl');
+        const previewOpen = document.getElementById('previewOpen');
+        const previewFallback = document.getElementById('previewFallback');
+        const previewLoader = document.getElementById('previewLoader');
+
+        function openPreview(url, title) {
+            if (!previewModal || !url) return;
+            previewFrame.src = url;
+            previewTitle.textContent = title || 'Project Preview';
+            previewUrl.textContent = url;
+            previewOpen.href = url;
+            previewFallback.href = url;
+            previewLoader.style.display = 'flex';
+            previewModal.classList.add('active');
+            previewModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreview() {
+            if (!previewModal) return;
+            previewModal.classList.remove('active');
+            previewModal.setAttribute('aria-hidden', 'true');
+            previewFrame.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        if (previewFrame) {
+            previewFrame.addEventListener('load', function() {
+                previewLoader.style.display = 'none';
+            });
+        }
+
+        document.querySelectorAll('.view-details').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const card = this.closest('.portfolio-item');
+                const link = card ? card.querySelector('.portfolio-links a:not(.view-details)') : null;
+                const titleEl = card ? card.querySelector('.portfolio-overlay h3') : null;
+                const url = link ? link.getAttribute('href') : null;
+                if (url && url !== '#') {
+                    openPreview(url, titleEl ? titleEl.textContent : 'Project Preview');
+                }
+            });
+        });
+
+        const previewCloseBtn = document.getElementById('previewClose');
+        if (previewCloseBtn) {
+            previewCloseBtn.addEventListener('click', closePreview);
+        }
+        if (previewModal) {
+            previewModal.addEventListener('click', function(e) {
+                if (e.target === previewModal) closePreview();
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && previewModal && previewModal.classList.contains('active')) {
+                closePreview();
+            }
+        });
 
         // Newsletter Subscription
         const newsletterForm = document.querySelector('.newsletter-form');
