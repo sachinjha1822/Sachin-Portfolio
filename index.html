@@ -502,6 +502,8 @@
 
     .social-media {
         display: flex;
+        flex-wrap: wrap;
+        row-gap: 1.5rem;
         margin-bottom: 3rem;
     }
 
@@ -1501,16 +1503,23 @@
 
     @media (max-width: 992px) {
         .home .container {
-            flex-direction: column;
+            flex-direction: column-reverse;
             text-align: center;
+        }
+
+        .home-content,
+        .home-image {
+            max-width: 100%;
+            min-width: 0;
         }
         
         .home-content {
-            margin-bottom: 5rem;
+            margin-bottom: 0;
         }
         
         .home-image {
-            margin-top: 5rem;
+            margin-top: 0;
+            margin-bottom: 4rem;
         }
         
         .about .container {
@@ -1608,10 +1617,18 @@
     @media (max-width: 576px) {
         .home .title {
             font-size: 3.5rem;
+            overflow-wrap: break-word;
         }
         
         .home .profession {
             font-size: 2rem;
+        }
+
+        .social-link {
+            width: 4rem;
+            height: 4rem;
+            font-size: 1.6rem;
+            margin-right: 1rem;
         }
         
         .section-title {
@@ -1992,6 +2009,41 @@
     .preview-foot a {
       color: var(--primary-color);
       font-weight: 600;
+    }
+
+    .preview-blocked {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      background-color: var(--bg-color);
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .preview-blocked img {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .preview-blocked h3 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .preview-blocked p {
+      font-size: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .preview-blocked .btn i {
+      margin-left: 0.8rem;
     }
 
     @media (max-width: 576px) {
@@ -2455,12 +2507,15 @@
     /* Responsive adjustments */
     @media (max-width: 480px) {
       .ai-assistant {
-        bottom: 30px;
-        right: 90px;
+        bottom: 95px;
+        right: 12px;
+        left: auto;
       }
-      
+
       .ai-chatbox {
-        width: 80vw;
+        right: 0;
+        width: calc(100vw - 24px);
+        max-width: 380px;
         max-height: 70vh;
       }
       
@@ -3281,6 +3336,12 @@
         <div class="preview-body"> 
           <div class="preview-loader" id="previewLoader"><span></span><p>Loading live website...</p></div> 
           <iframe id="previewFrame" title="Live project preview" loading="lazy"></iframe> 
+          <div class="preview-blocked" id="previewBlocked" hidden> 
+            <img id="previewShot" src="" alt="Project screenshot"> 
+            <h3 id="previewBlockedTitle">Project Preview</h3> 
+            <p>This website blocks live embedding for security, so it can't run inside this window.</p> 
+            <a href="#" target="_blank" class="btn btn-primary" id="previewGo">Open Live Website <i class="fas fa-external-link-alt"></i></a> 
+          </div> 
         </div> 
         <div class="preview-foot">If the site does not load here, <a href="#" target="_blank" id="previewFallback">open it in a new tab</a></div> 
       </div> 
@@ -3615,10 +3676,10 @@
         // Smooth scrolling for all links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
                 const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                if (!targetId || targetId === '#' || targetId.charAt(0) !== '#') return;
+
+                e.preventDefault();
                 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
@@ -3813,15 +3874,44 @@
         const previewOpen = document.getElementById('previewOpen');
         const previewFallback = document.getElementById('previewFallback');
         const previewLoader = document.getElementById('previewLoader');
+        const previewBlocked = document.getElementById('previewBlocked');
+        const previewShot = document.getElementById('previewShot');
+        const previewBlockedTitle = document.getElementById('previewBlockedTitle');
+        const previewGo = document.getElementById('previewGo');
 
-        function openPreview(url, title) {
+        // These hosts send X-Frame-Options / CSP that forbids embedding,
+        // so the browser always refuses to load them in an iframe.
+        const blockedHosts = ['hospitalityos.aimgroupglobal.com', 'argonova.aimgroupglobal.com', 'github.com', 'www.github.com'];
+
+        function isBlockedHost(url) {
+            try {
+                return blockedHosts.indexOf(new URL(url).hostname) !== -1;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function openPreview(url, title, imgSrc) {
             if (!previewModal || !url) return;
-            previewFrame.src = url;
             previewTitle.textContent = title || 'Project Preview';
             previewUrl.textContent = url;
             previewOpen.href = url;
             previewFallback.href = url;
-            previewLoader.style.display = 'flex';
+            if (isBlockedHost(url)) {
+                previewFrame.src = '';
+                previewFrame.style.display = 'none';
+                previewLoader.style.display = 'none';
+                previewShot.src = imgSrc || '';
+                previewShot.alt = (title || 'Project') + ' screenshot';
+                previewBlockedTitle.textContent = title || 'Project Preview';
+                previewGo.href = url;
+                previewBlocked.hidden = false;
+            } else {
+                previewBlocked.hidden = true;
+                previewFrame.style.display = 'block';
+                previewFrame.src = url;
+                previewLoader.style.display = 'flex';
+            }
             previewModal.classList.add('active');
             previewModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
@@ -3832,6 +3922,7 @@
             previewModal.classList.remove('active');
             previewModal.setAttribute('aria-hidden', 'true');
             previewFrame.src = '';
+            previewBlocked.hidden = true;
             document.body.style.overflow = 'auto';
         }
 
@@ -3847,9 +3938,10 @@
                 const card = this.closest('.portfolio-item');
                 const link = card ? card.querySelector('.portfolio-links a:not(.view-details)') : null;
                 const titleEl = card ? card.querySelector('.portfolio-overlay h3') : null;
+                const imgEl = card ? card.querySelector('.portfolio-img img') : null;
                 const url = link ? link.getAttribute('href') : null;
                 if (url && url !== '#') {
-                    openPreview(url, titleEl ? titleEl.textContent : 'Project Preview');
+                    openPreview(url, titleEl ? titleEl.textContent : 'Project Preview', imgEl ? imgEl.getAttribute('src') : '');
                 }
             });
         });
