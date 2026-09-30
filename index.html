@@ -2520,7 +2520,7 @@
         <div class="about-content" data-aos="fade-left"> 
             <h2 class="section-title">About <span>Me</span></h2> 
             <h3 class="section-subtitle">Full-Stack Developer & Tech Entrepreneur</h3> 
-            <p class="about-text">I'm a passionate Full-Stack Web Developer currently working at <a href="https://aimgroupglobal.com" target="_blank">AIM Technology Pvt. Ltd. (AIM Group Global)</a>, where I develop and maintain enterprise-level internal systems like <a href="https://emplyra.aimgroupglobal.com" target="_blank">Emplyra (HR System)</a> and <a href="https://bajrang.aimgroupglobal.com" target="_blank">Bajrang (Business Dashboard)</a>. As the Co-Founder of <a href="https://jisnusports.com" target="_blank">JisnuSports</a>, I'm dedicated to building a sports donation platform to support underprivileged athletes. My expertise lies in building scalable backend systems with Python (Django/Flask) and PHP, designing responsive UI/UX, and developing RESTful APIs for impactful digital solutions.</p> 
+            <p class="about-text">I'm a passionate Full-Stack Web Developer currently working at <a href="https://aimgroupglobal.com" target="_blank">AIM Technology Pvt. Ltd. (AIM Group Global)</a>, where I develop and maintain enterprise-level internal systems like <a href="https://emplyra.aimgroupglobal.com" target="_blank">Emplyra (HR System)</a> and <a href="https://argonova.aimgroupglobal.com" target="_blank">Argonova (E-commerce Store)</a>. As the Co-Founder of <a href="https://jisnusports.com" target="_blank">JisnuSports</a>, I'm dedicated to building a sports donation platform to support underprivileged athletes. My expertise lies in building scalable backend systems with Python (Django/Flask) and PHP, designing responsive UI/UX, and developing RESTful APIs for impactful digital solutions.</p> 
             
             <div class="skills"> 
                 <div class="skill-item"> 
@@ -2578,10 +2578,10 @@
         <h2 class="section-title" data-aos="fade-up">My <span>Services</span></h2>
         <p class="section-description" data-aos="fade-up">Professional services to bring your digital ideas to life</p>
         <div class="services-container">
-            <div class="service-card" data-aos="fade-up"><div class="service-icon"><i class="fas fa-laptop-code"></i></div><h3 class="service-title">Web Development</h3><p class="service-description">Custom websites & enterprise web apps with modern frameworks.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
-            <div class="service-card premium" data-aos="fade-up"><div class="service-icon"><i class="fas fa-mobile-alt"></i></div><h3 class="service-title">Mobile App Development</h3><p class="service-description">Cross-platform mobile apps using Flutter & React Native.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
-            <div class="service-card premium" data-aos="fade-up"><div class="service-icon"><i class="fas fa-server"></i></div><h3 class="service-title">Backend & API</h3><p class="service-description">Scalable backend systems with Django, Flask, and Node.js.</p><div class="premium-badge">Premium</div><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
-            <div class="service-card" data-aos="fade-up"><div class="service-icon"><i class="fas fa-paint-brush"></i></div><h3 class="service-title">UI/UX Design</h3><p class="service-description">Responsive, intuitive interfaces for better user engagement.</p><a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="service-card" data-aos="fade-up"><div class="service-icon"><i class="fas fa-laptop-code"></i></div><h3 class="service-title">Web Development</h3><p class="service-description">Custom websites & enterprise web apps with modern frameworks.</p><a href="#" class="read-more" data-service="web">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="service-card premium" data-aos="fade-up"><div class="service-icon"><i class="fas fa-mobile-alt"></i></div><h3 class="service-title">Mobile App Development</h3><p class="service-description">Cross-platform mobile apps using Flutter & React Native.</p><a href="#" class="read-more" data-service="mobile">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="service-card premium" data-aos="fade-up"><div class="service-icon"><i class="fas fa-server"></i></div><h3 class="service-title">Backend & API</h3><p class="service-description">Scalable backend systems with Django, Flask, and Node.js.</p><div class="premium-badge">Premium</div><a href="#" class="read-more" data-service="backend">Read More <i class="fas fa-arrow-right"></i></a></div>
+            <div class="service-card" data-aos="fade-up"><div class="service-icon"><i class="fas fa-paint-brush"></i></div><h3 class="service-title">UI/UX Design</h3><p class="service-description">Responsive, intuitive interfaces for better user engagement.</p><a href="#" class="read-more" data-service="uiux">Read More <i class="fas fa-arrow-right"></i></a></div>
         </div>
         <div class="packages-container" data-aos="fade-up">
             <h3 class="packages-title">Website Packages</h3>
@@ -3508,6 +3508,69 @@
                     policyPopup.classList.remove('active');
                     document.body.style.overflow = 'auto'; // Re-enable scrolling
                 }
+            });
+        }
+
+        // Service Read More Popup Functionality
+        const serviceContent = {
+            web: {
+                title: 'Web Development',
+                html: `
+                    <h3>What I Build</h3>
+                    <p>Custom websites & enterprise web apps – from business sites to full systems like Emplyra (HR), Argonova (E-commerce Store) and Hospitality OS (Restaurant + Hotel OS with 50+ modules).</p>
+                    <h3>Includes</h3>
+                    <p>• Responsive design (mobile / tablet / desktop)<br>• Modern frameworks & clean UI<br>• SEO-friendly structure<br>• Contact forms, WhatsApp integration<br>• Deployment & 1-6 months support (as per package)</p>
+                    <h3>Packages</h3>
+                    <p>Basic ₹5,999 • Standard ₹12,999 • Premium ₹24,999 – <a href="https://wa.me/917033192746?text=Hi%20Sachin%2C%20I%20want%20to%20discuss%20a%20website%20project" target="_blank" style="color: #ff4a57; font-weight: bold;">Chat on WhatsApp to get started</a></p>
+                `
+            },
+            mobile: {
+                title: 'Mobile App Development',
+                html: `
+                    <h3>What I Build</h3>
+                    <p>Cross-platform mobile apps using Flutter & React Native – single codebase for Android + iOS, fast and cost-effective.</p>
+                    <h3>Includes</h3>
+                    <p>• App UI + API integration<br>• Login / OTP / push notifications<br>• Play Store deployment guidance<br>• Clean, maintainable code</p>
+                    <h3>Next Step</h3>
+                    <p>Share your app idea – <a href="https://wa.me/917033192746?text=Hi%20Sachin%2C%20I%20want%20a%20mobile%20app" target="_blank" style="color: #ff4a57; font-weight: bold;">Discuss on WhatsApp</a></p>
+                `
+            },
+            backend: {
+                title: 'Backend & API Development',
+                html: `
+                    <h3>What I Build</h3>
+                    <p>Scalable backend systems with Python (Django / Flask), PHP and Node.js – secure RESTful APIs, role-based access, dashboards & automation.</p>
+                    <h3>Includes</h3>
+                    <p>• Database design (MySQL)<br>• REST APIs + third-party integrations<br>• Auth, roles & permissions<br>• POS / Inventory / HR logic (like Emplyra, Hospitality OS)<br>• Performance & security best practices</p>
+                    <h3>Next Step</h3>
+                    <p><a href="https://wa.me/917033192746?text=Hi%20Sachin%2C%20I%20need%20backend%20%2F%20API%20development" target="_blank" style="color: #ff4a57; font-weight: bold;">Discuss your backend requirement on WhatsApp</a></p>
+                `
+            },
+            uiux: {
+                title: 'UI/UX Design',
+                html: `
+                    <h3>What I Do</h3>
+                    <p>Responsive, intuitive interfaces for better user engagement – landing pages, e-commerce layouts, dashboards and portfolios.</p>
+                    <h3>Includes</h3>
+                    <p>• Modern layout + typography + colors<br>• Mobile-first responsive design<br>• Prototype-style clean sections<br>• Conversion-focused CTA placement</p>
+                    <h3>Next Step</h3>
+                    <p><a href="https://wa.me/917033192746?text=Hi%20Sachin%2C%20I%20need%20UI%2FUX%20design" target="_blank" style="color: #ff4a57; font-weight: bold;">Send your design requirement on WhatsApp</a></p>
+                `
+            }
+        };
+
+        const readMoreLinks = document.querySelectorAll('.read-more');
+        if (readMoreLinks.length > 0 && policyPopup) {
+            readMoreLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const key = this.getAttribute('data-service') || 'web';
+                    const data = serviceContent[key] || serviceContent.web;
+                    popupTitle.textContent = data.title;
+                    popupText.innerHTML = data.html;
+                    policyPopup.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
             });
         }
 
