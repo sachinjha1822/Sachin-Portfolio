@@ -3881,7 +3881,9 @@
 
         // These hosts send X-Frame-Options / CSP that forbids embedding,
         // so the browser always refuses to load them in an iframe.
-        const blockedHosts = ['hospitalityos.aimgroupglobal.com', 'github.com', 'www.github.com'];
+        // github.com kabhi embedding allow nahi karta (unka server, badal nahi sakte),
+        // isliye sirf wahi list me hai. Apni baaki sab sites .htaccess se allowed hain.
+        const blockedHosts = ['github.com', 'www.github.com'];
 
         function isBlockedHost(url) {
             try {
